@@ -22,11 +22,11 @@ const NaverMovie = () => {
     <button onClick={onClick}>네이버 영화 크롤링</button>
     <p>버튼을 클릭하시면, 네이버 영화 목록이 출력됩니다.</p>
     <table>
-        <teahd>
+        <thead>
             <tr>
                 <th>순위 </th><th >영화</th>
             </tr>
-        </teahd>
+        </thead>
         <tbody>
             {movie && movie.map(({rank,title})=> (
                 <tr key={rank}><td>{rank}</td><td>{title}</td></tr>

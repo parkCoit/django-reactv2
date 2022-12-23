@@ -1,42 +1,77 @@
+import string
+import random
+from random import shuffle
 import pandas as pd
-from random_id import random_id
 from sqlalchemy import create_engine
+
+from blog.blog_users.lambdas import lambda_string, lambda_k_name, lambda_number, random_number, lambda_phone, \
+    lambda_birth, address_list, job_list, interests_list
+
 
 class UserServices(object):
     def __init__(self):
-        global  random, random_email, random_nickname, random_password, engine
-        # random = [random_id() for i in range(100)]
-        random_email = [f'{random_id()}@naver.com' for i in range(100)]
-        random_nickname = [random_id() for i in range(100)]
-        random_password = [random_id() for i in range(100)]
+        global engine
         engine = create_engine(
-             "mysql+pymysql://root:root@localhost:3306/mydb",
-             encoding='utf-8')
+            "mysql+pymysql://root:root@localhost:3306/mydb",
+            encoding='utf-8')
 
     def insert_users(self):
-        dc = self.create_user()
-        ls = self.create_users(dc)
-        df = self.change_to_df_users(ls)
-        df.to_sql(name='blog_users',
-                   if_exists='append',
-                   con=engine,
-                   index=False)
+        df = self.create_users()
+        df.to_sql(name='users',
+                  if_exists='append',
+                  con=engine,
+                  index=False)
 
-    def create_user(self):
+    '''
+     model의 dtype이 숫자인 AutoField로 돼있어서 임시로 수정되면 
+     "blog_userid= ''.join(random.sample(string_pool, 5))"로 변경
+     (email도 email = blog_userid + "@naver.com"로 변경)
+    '''
+    def create_user(self)->[]:
+        user_email = str(lambda_string(4)) + "@test.com"
+        password = '1'
+        user_name = lambda_k_name(2)
+        phone = lambda_phone(4)
+        birth = lambda_birth(1985, 2011)
+        address = random.choice(address_list)
+        job = random.choice(job_list)
+        user_interests = random.choice(interests_list)
+        token = 'JWT fefege..'
+        '''
+        user_email = models.TextField()
+        password = models.CharField(max_length=10)
+        user_name = models.TextField()
+        phone = models.TextField()
+        birth = models.TextField()
+        address = models.TextField(blank=True)
+        job = models.TextField()
+        user_interests = models.TextField()
+        '''
+
+        return [user_email, password, user_name, phone, birth,
+                address, job, user_interests, token]
+
+
+    def create_users(self)->[]:
+        rows = [self.create_user() for i in range(100)]
+        columns = ['user_email', 'password', 'user_name', 'phone', 'birth', 'address', 'job', 'user_interests', 'token']
+        df = pd.DataFrame(rows, columns=columns)
+        df['user_email'] = df['user_email'].astype(str)
+        print(df)
+        return df
+
+    def get_users(self)->[]:
         pass
 
-
-    def get_user(self):
-        df = pd.DataFrame({
-            # 'blog_userid' : random,
-            'email' : random_email,
-            'nickname' : random_nickname,
-            'password' : random_password
-        })
-        ls = list(df)
-        # df.duplicated(['blog_userid'])
-        return ls
-
+    def userid_checker(self):  # 아이디 중복체크
+        pass
+        '''print('중복 확인')
+        df = self.create_users()
+        if df.duplicated(['blog_userid'], keep=False) == True:
+            print('중복된 아이디입니다')
+        else:
+            return df'''
 
 if __name__ == '__main__':
-    UserServices().get_user()
+    # UserServices().insert_users()
+    UserServices().create_users()

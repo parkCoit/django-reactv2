@@ -1,3 +1,5 @@
+import operator
+
 from nltk.tokenize import word_tokenize
 from konlpy.tag import Okt
 import pandas as pd
@@ -93,10 +95,9 @@ class Service:
         print('빈도수로 정렬')
         self.freqtxt = pd.Series(dict(FreqDist(self.texts))).sort_values(ascending=False)
 
-        freqdist =dict(FreqDist(self.texts))
-
-        ls = [{"word" : k, "num" : v} for k, v in freqdist.items()]
-
+        freqdist = dict(FreqDist(self.texts))
+        ls = [{"word" : k, "num" : v} for k, v in sorted(freqdist.items(), key=operator.itemgetter(1), reverse=True) ]
+        print(ls)
         print(f'{self.freqtxt[:100]}')
         return ls
 
