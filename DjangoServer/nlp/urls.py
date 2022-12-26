@@ -4,3 +4,4 @@ from nlp import views
 urlpatterns = [
     url(r'samsung-report', views.samsung_report)
 ]
+

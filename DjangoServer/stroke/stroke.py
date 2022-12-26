@@ -8,9 +8,12 @@ from imblearn.under_sampling import RandomUnderSampler
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
 import seaborn as sns
-font_path = "C:/Windows/Fonts/malgunbd.ttf"
+
+'''
+font_path = "./data/malgunbd.ttf"
 font = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font)
+'''
 
 
 
@@ -52,8 +55,8 @@ None
 
 class Stroke:
 
-    data_path = r"./stroke/data"
-    save = "./stroke/save"
+    data_path = r"./data"
+    save = "./save"
 
     def __init__(self):
         self.stroke = pd.read_csv(f'{self.data_path}/healthcare-dataset-stroke-data.csv')
