@@ -35,12 +35,16 @@ class ImdbService:
 
     def preprocess(self):
         train_seq = pad_sequences(train_input, maxlen=100) # pad_sequences() 함수를 사용해 train_input의 길이를 100으로 맞춘다
+
         # print(train_seq.shape)
         # print(train_seq[0])
         # print(train_input[0][-10:])
         # print(train_seq[5])
         val_seq = pad_sequences(val_input, maxlen=100)
-        return [train_seq, val_seq, train_target, val_target]
+        return {'train_seq' : train_seq,
+                'val_seq': val_seq,
+                'train_target': train_target,
+                'val_target': val_target}
 
 
     def create_model(self):

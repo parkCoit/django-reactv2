@@ -23,8 +23,8 @@ class ImdbModel(object):
 
     def hook(self):
         data = ImdbService().preprocess()
-        self.create(data[0], data[1])
-        self.fit(data[2], data[3])
+        self.create(data['train_seq'], data['val_seq'])
+        self.fit(data['train_target'], data['val_target'])
 
     def create(self, train_seq, val_seq):
         global model ,train_oh, val_oh
@@ -92,4 +92,5 @@ if __name__ == '__main__':
     # data = ImdbService().preprocess()
     # ImdbModel().create(data[0], data[1])
     # ImdbModel().fit(data[2], data[3])
+    ImdbModel().hook()
     NaverMovieModel().crawling()
