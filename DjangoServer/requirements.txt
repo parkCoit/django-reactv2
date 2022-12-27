@@ -19,6 +19,8 @@ itsdangerous==1.1.0
 JPype1
 jsonify==0.5
 jupyter==1
+keras
+keras-preprocessing
 konlpy==0.5.2
 lxml
 MarkupSafe==2.1.1

@@ -120,6 +120,7 @@ class FruitsService:
         print(type(train_ds))
         return [train_ds,  val_ds, test_ds]
 
+
     def create_model(self):
         train_ds, val_ds, test_ds = self.create_test_dataset_shuffle()
         class_names = self.create_train_dataset()[1]

@@ -34,3 +34,5 @@ async function samsung(){
 
 
 export default samsungService
+
+
