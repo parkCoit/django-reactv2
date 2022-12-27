@@ -52,6 +52,7 @@ torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
 tweepy==3.10.0
 tqdm
 urllib3==1.25.10
+webdriver-manager
 Werkzeug==2.2
 wincertstore==0.2
 wordcloud

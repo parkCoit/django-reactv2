@@ -57,6 +57,7 @@ class ScrapServeice(Scrap):
     def naver_movie_review(self):
         if os.path.isfile(savepath):
             naver_csv = pd.read_csv(savepath, header=None, index_col=0)
+            print(naver_csv)
             ls_movie = list(naver_csv.index)
             print(ls_movie)
             rank = [{'rank' : f'{i+1}위 :',
