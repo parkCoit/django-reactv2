@@ -73,5 +73,5 @@ class UserServices(object):
             return df'''
 
 if __name__ == '__main__':
-    # UserServices().insert_users()
+    UserServices().insert_users()
     UserServices().create_users()
