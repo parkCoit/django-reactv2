@@ -1,8 +1,8 @@
 
 const server = `http://localhost:8000`
 
-const samsungService = {
-    samsung
+const Services = {
+    samsung, naverReview
 }
 
 function handleResponse(response){ 
@@ -32,7 +32,25 @@ async function samsung(){
     return Promise.resolve(res);
 }
 
+async function naverReview(req){
+    const requestOption = {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(req)
+    }
+    alert(`사용자 이름 : ${JSON.stringify(req)}`)
+    const res = await fetch(`${server}/nlp/imdb`, requestOption )
+    .then(handleResponse)
+    .then(data => JSON.stringify(data))
+    .catch((error) => {
+        alert('error :::: '+error);
+    });
+    alert('문장  ::: '+res)
+    return Promise.resolve(res);
+}
 
-export default samsungService
+
+
+export default Services
 
 

@@ -1,17 +1,17 @@
 from django.db import models
 
-from shop.shop_users.models import ShopUser
+from blog.blog_users.models import User
 
 
 class Delivery(models.Model):
     use_in_migration = True
     delivery_id = models.AutoField(primary_key=True)
-    username = models.TextField()
-    address = models.TextField()
-    detail_address = models.TextField()
-    phone = models.TextField()
+    username = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    detail_address = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
 
-    shop_user = models.ForeignKey(ShopUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "shop_deliveries"

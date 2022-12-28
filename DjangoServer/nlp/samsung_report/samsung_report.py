@@ -1,4 +1,5 @@
 import operator
+import os
 
 from nltk.tokenize import word_tokenize
 from konlpy.tag import Okt
@@ -124,7 +125,7 @@ class Controller:
 
     def data_analysis(self):
         self.entity.fname = 'kr-Report_2018.txt'
-        self.entity.context = 'C:/Users/bitcamp/django-react/DjangoServer/nlp/samsung_report/'
+        self.entity.context = os.path.join(os.getcwd(), 'nlp/samsung_report/')
         self.service.extract_tokens(self.entity)
         self.service.extract_hangeul()
         self.service.conversion_token()
@@ -139,7 +140,7 @@ class Controller:
         # self.service.draw_wordcloud(self.entity)
 
     def hook(self):
-        self.entity.context = 'C:/Users/bitcamp/django-react/DjangoServer/nlp/samsung_report/'
+        self.entity.context = os.path.join(os.getcwd(), '/nlp/samsung_report/')
         self.entity.fname = 'stopwords.txt'
         self.service.extract_tokens(self.entity)
         self.service.extract_stopword(self.entity)

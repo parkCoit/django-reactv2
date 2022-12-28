@@ -2,14 +2,11 @@ import os.path
 
 import keras.utils
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import tensorflow as tf
-from bs4 import BeautifulSoup
 from keras import Sequential, layers, optimizers, callbacks
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from webcrawler.models import Scrap
+
 
 from nlp.imdb.services import ImdbService
 
@@ -56,36 +53,13 @@ class ImdbModel(object):
         plt.legend(['train', 'val'])
         plt.show()
 
-
-class NaverMovieModel(Scrap):
-    def __init__(self):
-        global url, driver, file_name
-        url = f'https://movie.naver.com/movie/point/af/list.naver?&page=1'
-        chrome_options = webdriver.ChromeOptions()
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-        file_name = r'C:\Users\bitcamp\django-react\DjangoServer\nlp\imdb\naver_movie_review_corpus.csv'
-
-    def crawling(self):
-        if os.path.isfile(file_name):
-            review_csv = pd.read_csv(file_name, header=None, index_col=0)
-            ls_review = list(review_csv.index)
-            print(ls_review)
-        else:
-            driver.get(url)
-            soup = BeautifulSoup(driver.page_source, 'html.parser')
-            all_td = soup.find_all('td', attrs={"class" : "title"})
+class NaverMovieModel:
+    pass
 
 
-            reviews = {td.br.next_element.strip():td.div.em.text
-                        for td  in all_td
-                        if td.br.next_element.strip() != ""} # strip()함수는 공백 제거(ex) \n)
-            df = pd.Series(reviews)
-            print(reviews)
-            df.to_csv(file_name, header=None)
-            driver.close()
-            review_csv = pd.read_csv(file_name, header=None, index_col=0)
-            ls_review = list(review_csv.index)
-            print(ls_review)
+
+
+
 
 
 if __name__ == '__main__':
@@ -93,4 +67,3 @@ if __name__ == '__main__':
     # ImdbModel().create(data[0], data[1])
     # ImdbModel().fit(data[2], data[3])
     ImdbModel().hook()
-    NaverMovieModel().crawling()

@@ -6,9 +6,9 @@ from shop.categories.models import Category
 class Product(models.Model):
     use_in_migration = True
     product_id = models.AutoField(primary_key=True)
-    name = models.TextField()
-    price = models.TextField()
-    image_url = models.TextField()
+    name = models.CharField(max_length=100)
+    price = models.CharField(max_length=100)
+    image_url = models.CharField(max_length=255)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 

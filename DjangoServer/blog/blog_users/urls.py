@@ -4,5 +4,5 @@ from blog.blog_users import views
 urlpatterns = [
     url(r'login', views.login),
     url(r'signup', views.signup),
-    url(r'insertdummy', views.insertdummy),
+    url(r'user-list', views.user_list),
 ]

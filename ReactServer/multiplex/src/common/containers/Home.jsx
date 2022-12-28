@@ -6,7 +6,7 @@ import {Stroke2} from "stroke"
 import {Iris2} from "dlearn/iris"
 import {Number} from "dlearn/number"
 import {NaverMovie} from "webcrawler"
-import {SamsungReport} from 'nlp'
+import {SamsungReport, NaverReview} from 'nlp'
 
 import fashion from 'images/fashion.png'
 
@@ -36,6 +36,7 @@ const Home = () =>{
                         <Route path="/number" element={<Number/>} ></Route>
                          <Route path="/navermovie" element={<NaverMovie/>} ></Route>
                          <Route path="/nlp/samsung-report" element={<SamsungReport/>} ></Route>
+                         <Route path="/nlp/imdb" element={<NaverReview/>} ></Route>
                     </Routes>
                     
                     </td>

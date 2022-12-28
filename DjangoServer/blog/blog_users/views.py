@@ -30,6 +30,6 @@ def signup(request):
 
 @api_view(['GET'])
 @parser_classes([JSONParser])
-def insertdummy(request):
-    users = UserServices().get_user()
-    return JsonResponse({'data': users})
+def user_list(request):
+    UserServices().get_users()
+    return JsonResponse({'users': UserServices().get_users()})

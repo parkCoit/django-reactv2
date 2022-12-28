@@ -2,7 +2,7 @@ from django.db import models
 
 from shop.deliveries.models import Delivery
 from shop.products.models import Product
-from shop.shop_users.models import ShopUser
+from blog.blog_users.models import User
 
 
 class Order(models.Model):
@@ -10,7 +10,7 @@ class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    shop_user = models.ForeignKey(ShopUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     deliveries = models.ForeignKey(Delivery, on_delete=models.CASCADE)
 

@@ -1,7 +1,7 @@
 from django.db import models
 
 from shop.products.models import Product
-from shop.shop_users.models import ShopUser
+from blog.blog_users.models import User
 
 
 class Cart(models.Model):
@@ -9,7 +9,7 @@ class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True)
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(ShopUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "shop_carts"

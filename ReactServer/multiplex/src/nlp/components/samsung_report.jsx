@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import samsungService from "nlp/api"
+import Services from "nlp/api"
 
 
 const SamsungReport = () => {
@@ -7,9 +7,10 @@ const SamsungReport = () => {
 
     const onClick = e => {
         e.preventDefault()
-        samsungService.samsung().then(res => {
+        Services.samsung().then(res => {
             const json = JSON.parse(res)
             setSamsung(json['data'])
+            
         })
         let arr = document.getElementsByClassName('box')
         for(let i = 0; i< arr.length; i++) arr[i].value = ""
