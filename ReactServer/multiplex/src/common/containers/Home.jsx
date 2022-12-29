@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import {Counter, Footer, Navigation2 } from "common"
-import {Login, SignUp} from "uat"
+import {Login, SignUp, UserList } from "uat"
 import {Schedule} from "../../todos"
 import {Stroke2} from "stroke"
 import {Iris2} from "dlearn/iris"
@@ -31,6 +31,7 @@ const Home = () =>{
                         <Route path="/todos" element={<Schedule/>} ></Route>
                         <Route path="/auth/signup" element={<SignUp/>} ></Route>
                         <Route path="/auth/login" element={<Login/>} ></Route>
+                        <Route path="/auth/userlist" element={<UserList/>} ></Route>
                         <Route path="/stroke" element={<Stroke2/>} ></Route>
                         <Route path="/iris" element={<Iris2/>} ></Route>
                         <Route path="/number" element={<Number/>} ></Route>

@@ -18,18 +18,19 @@ const Navigation2 = () => {
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
-      >
+      > 
         <BottomNavigationAction label="Home" icon={<Link to = "/home"><RestoreIcon /></Link>} />
         <BottomNavigationAction label="Counter" icon={<Link to = "/counter"><FavoriteIcon /></Link>} />
         <BottomNavigationAction label="Todos" icon={<Link to = "/todos"><LocationOnIcon /></Link>} />
         <BottomNavigationAction label="Signup" icon={<Link to = "/auth/signup"><LocationOnIcon /></Link>} />
         <BottomNavigationAction label="Login" icon={<Link to = "/auth/login"><LocationOnIcon /></Link>} />
+        <BottomNavigationAction label="User-List" icon={<Link to = "/auth/userlist"><LocationOnIcon /></Link>} />
         <BottomNavigationAction label="뇌졸중" icon={<Link to = "/stroke"><LocationOnIcon /></Link>} />
         <BottomNavigationAction label="iris" icon={<Link to = "/iris"><LocationOnIcon /></Link>} />
         <BottomNavigationAction label="number" icon={<Link to = "/number"><LocationOnIcon /></Link>} />
         <BottomNavigationAction label="navermovie" icon={<Link to = "/navermovie"><LocationOnIcon /></Link>} />
         <BottomNavigationAction label="samsung" icon={<Link to = "/nlp/samsung-report"><LocationOnIcon /></Link>} />
-        <BottomNavigationAction label="imdb" icon={<Link to = "/nlp/imdb"><LocationOnIcon /></Link>} />
+        <BottomNavigationAction label="naver-review" icon={<Link to = "/nlp/imdb"><LocationOnIcon /></Link>} />
       </BottomNavigation>
     </Box>
   );

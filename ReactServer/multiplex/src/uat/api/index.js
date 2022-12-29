@@ -32,7 +32,7 @@ async function signUp2(){
     .catch((error) => {
         alert('error :::: '+error);
     });
-    alert('내부 1위영화 ::: '+res)
+    alert('회원 가입 ::: '+res)
     return Promise.resolve(res);
 }
 
