@@ -37,6 +37,8 @@ async function signUp2(){
 }
 
 
+
+
 export default signUpService
 
 

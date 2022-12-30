@@ -1,8 +1,13 @@
 import 'uat/style/UserList.css'
+import { useState } from "react"
 export default function ListForm({list}){
 
+    
+
     return (<><h2>User List</h2>
-        <table className='user-list'>
+        EMAIL : <input type="text" name="user_name" /><br/>
+        <button > 로그인 </button>
+        <table className='list'>
             <thead>
                 <tr>
                 <th>ID</th><th>이메일</th><th>비번</th><th>이름</th><th>전화번호</th>

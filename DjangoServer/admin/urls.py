@@ -19,8 +19,23 @@ from admin.views import hello
 
 urlpatterns = [
     path('', hello),
-    path("blog/auth/", include('blog.blog_users.urls')),
+    path("blog/auth", include('blog.blog_users.urls')),
+    path("blog/comments", include('blog.comments.urls')),
+    path("blog/posts", include('blog.posts.urls')),
+    path("blog/tags", include('blog.tags.urls')),
+    path("blog/views", include('blog.views.urls')),
+
+    path("mplx/cinemas", include('multiplex.cinemas.urls')),
     path("mplx/movie", include('multiplex.movies.urls')),
+    path("mplx/showtimes", include('multiplex.showtimes.urls')),
+    path("mplx/theater_tickets", include('multiplex.theater_tickets.urls')),
+    path("mplx/theaters", include('multiplex.theaters.urls')),
+
+    path("shop/carts", include('shop.carts.urls')),
+    path("shop/categories", include('shop.categories.urls')),
+    path("shop/deliveries", include('shop.deliveries.urls')),
+    path("shop/orders", include('shop.orders.urls')),
+    path("shop/products", include('shop.products.urls')),
     path("stroke", include('stroke.urls')),
     path("dlearn", include("dlearn.urls")),
     path("webcrawler", include("webcrawler.urls")),

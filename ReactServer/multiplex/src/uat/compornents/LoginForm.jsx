@@ -25,7 +25,7 @@ export default function LoginForm(){
             alert(JSON.stringify(res.data))
             localStorage.setItem('loginUser', JSON.stringify(res.data))
             alert(`저장된 데이터 : ${localStorage.getItem('loginUser')}`)
-            navigate('/home/ddddddddd')  
+            navigate('/home')  
         })
         .catch((err)=>{
             console.log(err)

@@ -5,9 +5,11 @@ import {ListForm} from 'uat'
 
 export default function UserList(){
     const [list, setList] = useState([])
+
+    
     useEffect(()=>{
         axios
-        .get('http://localhost:8000/blog/auth/user-list')
+        .get('http://localhost:8000/blog/auth/list')
         .then(res => {setList(res.data)})
         .catch(err => {console.log(err)})
     }, [])
