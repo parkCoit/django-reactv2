@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
+from blog.blog_users.models import User
 from blog.blog_users.repositories import UserRepository
 from blog.blog_users.serializers import UserSerializer
 
@@ -54,7 +55,15 @@ def user_list(request):
 @api_view(['GET'])
 @parser_classes([JSONParser])
 def user_list_by_name(request):
-    return UserRepository().find_user_by_email(request.data['user_name'])
+    return JsonResponse(UserRepository().find_user_by_email(request.data["user_email"]))
+
+
+@api_view(['GET'])
+@parser_classes([JSONParser])
+def exist_email(request, email):
+    exist = User.objects.all().filter(user_email=email).values()[0]
+    if email == exist['email']:
+        return JsonResponse({'result': '밍망'})
 
 
 @api_view(['POST'])

@@ -36,9 +36,11 @@ urlpatterns = [
     path("shop/deliveries", include('shop.deliveries.urls')),
     path("shop/orders", include('shop.orders.urls')),
     path("shop/products", include('shop.products.urls')),
+
     path("stroke", include('stroke.urls')),
     path("dlearn", include("dlearn.urls")),
     path("webcrawler", include("webcrawler.urls")),
     path("nlp", include("nlp.samsung_report.urls")),
-    path("nlp", include("nlp.imdb.urls"))
+    path("nlp", include("nlp.imdb.urls")),
+    path("nlp", include("nlp.korean_classify.urls"))
 ]

@@ -31,6 +31,7 @@ const Navigation2 = () => {
         <BottomNavigationAction label="navermovie" icon={<Link to = "/navermovie"><LocationOnIcon /></Link>} />
         <BottomNavigationAction label="samsung" icon={<Link to = "/nlp/samsung-report"><LocationOnIcon /></Link>} />
         <BottomNavigationAction label="naver-review" icon={<Link to = "/nlp/imdb"><LocationOnIcon /></Link>} />
+        <BottomNavigationAction label="korean-classify" icon={<Link to = "/nlp/korean-classify"><LocationOnIcon /></Link>} />
       </BottomNavigation>
     </Box>
   );

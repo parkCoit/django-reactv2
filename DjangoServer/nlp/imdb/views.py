@@ -10,5 +10,6 @@ def imdb(request):
     # print(request.GET)
     print(request.data)
     navermovie = NaverMovieService().hook(request.data['string'])
+    print(navermovie)
     return Response({'data' : navermovie})
 

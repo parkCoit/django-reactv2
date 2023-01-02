@@ -35,6 +35,7 @@ pandas
 pandas-datareader==0.9.0
 pep8==1.7.1
 plotly==5
+prophet==1.1.1
 python-dateutil==2.8.1
 pytz==2020.5
 requests==2.24.0
@@ -56,3 +57,4 @@ webdriver-manager
 Werkzeug==2.2
 wincertstore==0.2
 wordcloud
+yfinance==0.2.3

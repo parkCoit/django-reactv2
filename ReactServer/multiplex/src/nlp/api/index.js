@@ -2,7 +2,7 @@
 const server = `http://localhost:8000`
 
 const Services = {
-    samsung, naverReview
+    samsung, naverReview, koreanClassify
 }
 
 function handleResponse(response){ 
@@ -48,6 +48,24 @@ async function naverReview(req){
     alert('문장  ::: '+res)
     return Promise.resolve(res);
 }
+
+async function koreanClassify(req){
+    const requestOption = {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(req)
+    }
+    alert(`사용자 이름 : ${JSON.stringify(req)}`)
+    const res = await fetch(`${server}/nlp/korean-classify`, requestOption )
+    .then(handleResponse)
+    .then(data => JSON.stringify(data))
+    .catch((error) => {
+        alert('error :::: '+error);
+    });
+    alert('아아  ::: '+res)
+    return Promise.resolve(res);
+}
+
 
 
 
