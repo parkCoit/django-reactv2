@@ -5,6 +5,7 @@ import {Schedule} from "../../todos"
 import {Stroke2} from "stroke"
 import {Iris2} from "dlearn/iris"
 import {Number} from "dlearn/number"
+import {KospiSamsung} from "dlearn/aitrader"
 import {NaverMovie} from "webcrawler"
 import {SamsungReport, NaverReview, KoreanClassify} from 'nlp'
 
@@ -39,6 +40,7 @@ const Home = () =>{
                          <Route path="/nlp/samsung-report" element={<SamsungReport/>} ></Route>
                          <Route path="/nlp/imdb" element={<NaverReview/>} ></Route>
                          <Route path="/nlp/korean-classify" element={<KoreanClassify/>} ></Route>
+                         <Route path="/dlearn/kospi-sansung" element={<KospiSamsung/>} ></Route>
                     </Routes>
                     
                     </td>

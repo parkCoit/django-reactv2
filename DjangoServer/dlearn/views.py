@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
 from tensorboard.compat import tf
 
+from dlearn.aitrader.services import AiTraderService
 from dlearn.iris.fashion_service import FashionService
 from dlearn.iris.iris_service import IrisService
 from dlearn.number.number_service import NumberService
@@ -94,4 +95,10 @@ def number(request):
         result = NumberService().service_model(int(data['Num']))
         return JsonResponse({'result': result})
     else: print(';;;;')
+
+@api_view(['POST'])
+@parser_classes([JSONParser])
+def kospi_samsung(request):
+
+    return JsonResponse({"data": AiTraderService().DNN_predict(int(request.data["string"]))})
 

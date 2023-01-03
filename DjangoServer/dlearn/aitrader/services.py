@@ -2,9 +2,11 @@ import os.path
 import warnings
 
 import pandas as pd
+from keras.saving.save import load_model
 from prophet import Prophet
 
 from admin.path import dir_path
+from dlearn.aitrader.kospi_samsung import KospiSamsung
 
 warnings.filterwarnings("ignore")
 import pandas_datareader.data as web
@@ -62,7 +64,43 @@ class AiTraderService(object):
         plt.savefig(os.path.join(path, r'aitrader\kia.png'))
         plt.show()
 
+    def DNN_predict(self, i):
+        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled = KospiSamsung().dnn_samsung_scaled()
 
+        DNN_model = load_model(os.path.join(os.path.abspath("./dlearn/aitrader/save"), "DNN.h5"))
+
+        y_pred = DNN_model.predict(x_test_scaled)
+
+        return f'종가 : {y_test[i]}, 예측가 : {y_pred[i]}'
+
+    def DNN_Ensemble_predict(self, i):
+        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled = KospiSamsung().dnn_samsung_scaled()
+        x2_train, x2_test, y2_train, y2_test, x2_train_scaled, x2_test_scaled = KospiSamsung().dnn_kospi_scaled()
+
+        DNN_Ensemble_model = load_model(os.path.join(os.path.abspath("./dlearn/aitrader/save"), "DNN_Ensemble.h5"))
+
+        y_pred = DNN_Ensemble_model.predict([x_test_scaled, x2_test_scaled])
+
+        return f'종가 : {y_test[i]}, 예측가 : {y_pred[i]}'
+
+    def LSTM_predict(self, i):
+        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled = KospiSamsung().LSTM_samsung_scaled()
+
+        LSTM_model = load_model(os.path.join(os.path.abspath("./dlearn/aitrader/save"), "LSTM.h5"))
+
+        y_pred = LSTM_model.predict(x_test_scaled)
+
+        return f'종가 : {y_test[i]}, 예측가 : {y_pred[i]}'
+
+    def LSTM_Ensemble_predict(self, i):
+        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled = KospiSamsung().LSTM_samsung_scaled()
+        x2_train, x2_test, y2_train, y2_test, x2_train_scaled, x2_test_scaled = KospiSamsung().LSTM_kospi_scaled()
+
+        LSTM_Ensemble_model = load_model(os.path.join(os.path.abspath("./dlearn/aitrader/save"), "LSTM_Ensemble.h5"))
+
+        y_pred = LSTM_Ensemble_model.predict([x_test_scaled, x2_test_scaled])
+
+        return f'종가 : {y_test[i]}, 예측가 : {y_pred[i]}'
 
 if __name__ == '__main__':
     ai = AiTraderService()

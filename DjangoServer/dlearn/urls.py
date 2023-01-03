@@ -6,5 +6,6 @@ urlpatterns = [
     url(r'iris/(?P<req>)$', views.iris),
     url(r'fashion/(?P<id>)$', views.fashion),
     url(r'fashion', views.fashion),
-    url(r'number', views.number)
+    url(r'number', views.number),
+    url(r'kospi-samsung', views.kospi_samsung)
 ]
