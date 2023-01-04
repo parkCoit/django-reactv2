@@ -99,6 +99,9 @@ def number(request):
 @api_view(['POST'])
 @parser_classes([JSONParser])
 def kospi_samsung(request):
+    data = request.data['num']
+    print(request.data['num'])
+    return JsonResponse({"data":AiTraderService().model_predict(data)})
 
-    return JsonResponse({"data": AiTraderService().DNN_predict(int(request.data["string"]))})
+
 

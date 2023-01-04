@@ -6,7 +6,7 @@ from keras.saving.save import load_model
 from prophet import Prophet
 
 from admin.path import dir_path
-from dlearn.aitrader.kospi_samsung import KospiSamsung
+from dlearn.aitrader.models import AiTraderModel
 
 warnings.filterwarnings("ignore")
 import pandas_datareader.data as web
@@ -31,6 +31,7 @@ plt.rcParams['axes.unicode_minus'] = False
 Date  Open   High   Low  Close  Adj Close  Volume
 
 '''
+
 
 class AiTraderService(object):
 
@@ -65,17 +66,17 @@ class AiTraderService(object):
         plt.show()
 
     def DNN_predict(self, i):
-        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled = KospiSamsung().dnn_samsung_scaled()
+        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled, x2_train, x2_test, y2_train, y2_test, x2_train_scaled, x2_test_scaled = AiTraderModel().dnn_scaled()
 
         DNN_model = load_model(os.path.join(os.path.abspath("./dlearn/aitrader/save"), "DNN.h5"))
 
-        y_pred = DNN_model.predict(x_test_scaled)
+        y_pred = DNN_model.predict(x_train_scaled)
+
 
         return f'종가 : {y_test[i]}, 예측가 : {y_pred[i]}'
 
     def DNN_Ensemble_predict(self, i):
-        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled = KospiSamsung().dnn_samsung_scaled()
-        x2_train, x2_test, y2_train, y2_test, x2_train_scaled, x2_test_scaled = KospiSamsung().dnn_kospi_scaled()
+        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled, x2_train, x2_test, y2_train, y2_test, x2_train_scaled, x2_test_scaled = AiTraderModel().dnn_scaled()
 
         DNN_Ensemble_model = load_model(os.path.join(os.path.abspath("./dlearn/aitrader/save"), "DNN_Ensemble.h5"))
 
@@ -84,7 +85,7 @@ class AiTraderService(object):
         return f'종가 : {y_test[i]}, 예측가 : {y_pred[i]}'
 
     def LSTM_predict(self, i):
-        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled = KospiSamsung().LSTM_samsung_scaled()
+        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled, x2_train, x2_test, y2_train, y2_test, x2_train_scaled, x2_test_scaled = AiTraderModel().lstm_scaled()
 
         LSTM_model = load_model(os.path.join(os.path.abspath("./dlearn/aitrader/save"), "LSTM.h5"))
 
@@ -93,8 +94,7 @@ class AiTraderService(object):
         return f'종가 : {y_test[i]}, 예측가 : {y_pred[i]}'
 
     def LSTM_Ensemble_predict(self, i):
-        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled = KospiSamsung().LSTM_samsung_scaled()
-        x2_train, x2_test, y2_train, y2_test, x2_train_scaled, x2_test_scaled = KospiSamsung().LSTM_kospi_scaled()
+        x_train, x_test, y_train, y_test, x_train_scaled, x_test_scaled, x2_train, x2_test, y2_train, y2_test, x2_train_scaled, x2_test_scaled = AiTraderModel().lstm_scaled()
 
         LSTM_Ensemble_model = load_model(os.path.join(os.path.abspath("./dlearn/aitrader/save"), "LSTM_Ensemble.h5"))
 
@@ -102,6 +102,12 @@ class AiTraderService(object):
 
         return f'종가 : {y_test[i]}, 예측가 : {y_pred[i]}'
 
+    def model_predict(self, req):
+        return [{"dnn": AiTraderService().DNN_predict(int(req)),
+                         "dnnensemble": AiTraderService().DNN_Ensemble_predict(int(req)),
+                         "lstm": AiTraderService().LSTM_predict(int(req)),
+                         "lstmensemble": AiTraderService().LSTM_Ensemble_predict(int(req))}]
+
 if __name__ == '__main__':
     ai = AiTraderService()
-    ai.kia_predict()
+    ai.DNN_predict()

@@ -6,6 +6,7 @@ click==7
 dlib
 django-cors-headers
 djangorestframework
+fastapi
 folium==0.12.1
 Flask-RESTful==0.3.8
 Flask==1.1.2
@@ -53,6 +54,7 @@ torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
 tweepy==3.10.0
 tqdm
 urllib3==1.25.10
+uvicorn
 webdriver-manager
 Werkzeug==2.2
 wincertstore==0.2
