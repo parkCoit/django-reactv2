@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.8"
 
 services:
   db:
@@ -7,18 +7,20 @@ services:
     restart: always
     tty: true
     environment:
-      MYSQL_DATABASE : mydb
-      MYSQL_ROOT_PASSWORD : root
-      MYSQL_ROOT_HOST : root
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: root
     expose:
       - '3306'
     ports:
       - "3306:3306"
     volumes:
+      - ./docker/mysql/conf.d:/etc/conf.d
       - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
-      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+
     networks:
       - local-net
+
   api:
     links:
       - db
@@ -27,7 +29,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./code:/usr/src/server
+      - .:/app
     networks:
       - local-net
 networks:
