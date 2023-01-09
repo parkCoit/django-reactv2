@@ -9,3 +9,11 @@ create table users(
     user_interests varchar(20),
     token varchar(20)
 )charset = utf8;
+
+create table posts(
+    post_id int primary key auto_increment,
+    title varchar(100),
+    content varchar(100),
+    create_at datetime DEFAULT CURRENT_TIMESTAMP,
+    updated_at datetime ON UPDATE CURRENT_TIMESTAMP
+)charset = utf8;

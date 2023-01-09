@@ -7,7 +7,7 @@ class Post(models.Model):
     use_in_migration = True
     post_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
-    content = models.CharField(max_length=1000)
+    content = models.CharField(max_length=100)
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

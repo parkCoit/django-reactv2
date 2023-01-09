@@ -3,3 +3,4 @@ sqlalchemy
 uvicorn
 fastapi
 pymysql
+fastapi_sqlalchemy

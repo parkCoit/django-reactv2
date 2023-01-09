@@ -1,10 +1,11 @@
 import pandas as pd
 from riotwatcher import LolWatcher
+from collections import defaultdict
 
 class Name(object):
     def __init__(self):
         global api_key, watcher, my_region
-        api_key = "RGAPI-32cda5e3-20d8-4836-a56c-02bbb0fc8f63"
+        api_key = "RGAPI-0eab8cd7-2185-4cd3-80a1-d2b08c306045"
         watcher = LolWatcher(api_key)
         my_region = "kr"
 
@@ -18,54 +19,61 @@ class Name(object):
 
         json =to_db.to_json(orient = 'records', force_ascii=False)
         print(json)
-        to_react ={
-            'nickname': nickname,
-            'puuid' : puuid
-        }
-        print(to_react)
-        # print(to_react)
 
-        return to_react
+
+        return {'nickname': nickname, 'puuid' : puuid}
 
     def match_id(self, puuid):
         return watcher.match.matchlist_by_puuid(my_region, puuid, type='ranked')
 
-    def play_list(self, matchid, puuid):
-        matches = watcher.match.by_id(my_region, matchid)
-        metadata = matches['metadata']['participants']
-        user_num = [i for i in range(0,10)  if metadata[i] == puuid]
+    def play_list(self, puuid):
+        match_id = watcher.match.matchlist_by_puuid(my_region, puuid, type='ranked')
+        match_id_ls, champion_name_ls, result_ls, kills_ls, deaths_ls, assists_ls, kda_ls, position_ls, ummoner_name_ls, summoner_name_ls \
+            = list(), list(), list(), list(), list(), list(), list(), list(), list(), list()
 
-        user_info = matches['info']["participants"][user_num[0]]
+        for i in range(len(match_id)):
+                matches = watcher.match.by_id(my_region, match_id[i])
+                metadata = matches['metadata']['participants']
+                user_num = [i for i in range(0, 10) if metadata[i] == puuid]
+                user_info = matches['info']["participants"][user_num[0]]
+                champion_name = user_info['championName']
+                result = '패배' if str(user_info['win']) == 'False' else '승리'
+                kills = user_info['kills']
+                deaths = user_info['deaths']
+                assists = user_info['assists']
+                kda = 'perfect' if deaths == 0 else round((kills + assists) / deaths, 2)
+                position = 'Support' if user_info['teamPosition'] == 'UTILITY' else user_info['teamPosition']
+                summoner_name = user_info['summonerName']
+                match_id_ls.append(match_id[i])
+                champion_name_ls.append(champion_name)
+                result_ls.append(result)
+                kills_ls.append(kills)
+                deaths_ls.append(deaths)
+                assists_ls.append(assists)
+                kda_ls.append(kda)
+                position_ls.append(position)
+                summoner_name_ls.append(summoner_name)
 
-        champion_name = user_info['championName']
-        win = '승리' if str(user_info['win']) == 'True' else '패배'
-        kills = user_info['kills']
-        deaths = user_info['deaths']
-        assists = user_info['assists']
-        kda = 'perfect' if deaths == 0 else round((kills + assists) / deaths, 2)
-        position = user_info['teamPosition']
-        summoner_name = user_info['summonerName']
 
 
-        print(f'챔피언 이름 :{champion_name} \n'
-              f'승리 패배 : {win}\n'
-              f'킬 : {kills}\n'
-              f'데스 : {deaths}\n'
-              f'어시스트 : {assists}\n'
-              f'kda : {kda}\n'
-              f'라인 : {position}\n'
-              f'닉네임 : {summoner_name}\n')
-        to_db = pd.DataFrame({'champion': champion_name, 'win': win, 'kills': kills,
-          'deaths': deaths, 'assists': assists, 'kda' : kda, 'position':position, 'summoner_name': summoner_name},index = [0])
-        print(to_db)
-        json = to_db.to_json(orient='records', force_ascii=False)
+            # print(f'매치 기록 : {match_id[i]}\n'
+            #       f'챔피언 이름 :{champion_name} \n'
+            #       f'승리 패배 : {win}\n'
+            #       f'킬 : {kills}\n'
+            #       f'데스 : {deaths}\n'
+            #       f'어시스트 : {assists}\n'
+            #       f'kda : {kda},\n'
+            #       f'라인 : {position}\n'
+            #       f'닉네임 : {summoner_name}\n')
+        db_df = pd.DataFrame({'champion': champion_name_ls, 'win': result_ls, 'kills': kills_ls,
+                    'deaths': deaths_ls, 'assists': assists_ls, 'kda' : kda_ls, 'position': position_ls, 'summoner_name': summoner_name_ls }, index=match_id_ls)
+        print(db_df)
+        json = db_df.to_json(orient='records', force_ascii=False)
         print(json)
 
-        to_react = [{'champion': champion_name, 'win': win, 'kills': kills,
-          'deaths': deaths, 'assists': assists, 'kda' : kda, 'position':position, 'summoner_name': summoner_name}]
-        print(to_react)
+    def match_list(self):
+        pass
 
-        return to_react
 
     def all_death_time(self, matchid):
         time_line = watcher.match.timeline_by_match(my_region, matchid)
@@ -85,8 +93,8 @@ class Name(object):
 
         for i in range(len(time_line['info']['frames'])):
             for j in range(len(time_line['info']['frames'][i]['events'])):
-                if time_line['info']['frames'][i]['events'][j]['type']  == 'CHAMPION_KILL' \
-                        and time_line['info']['frames'][i]['events'][j]['victimId'] == in_game_id[0]:
+                if time_line['info']['frames'][i]['events'][j]['type']  == 'CHAMPION_KILL':
+                    if time_line['info']['frames'][i]['events'][j]['victimId'] == in_game_id[0] :
                        timestamp = time_line['info']['frames'][i]['events'][j]['timestamp']
                        death_list.append(timestamp)
         print(death_list)
@@ -94,9 +102,9 @@ class Name(object):
 
 
 if __name__ == '__main__':
-    name = Name().summoner('hideonbush')
+    name = Name().summoner('응애민호')
     puuid = name['puuid']
     match_id = Name().match_id(name['puuid'])
-    Name().play_list(match_id[2], puuid)
-    Name().all_death_time(match_id[0])
-    Name().user_death_time(match_id[0], puuid)
+    Name().play_list(puuid)
+    # Name().all_death_time(match_id[0])
+    # Name().user_death_time(match_id[0], puuid)
