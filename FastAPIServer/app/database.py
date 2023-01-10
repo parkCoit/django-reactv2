@@ -1,11 +1,10 @@
 import pymysql
 
-
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from app.env import HOSTNAME, PORT, USERNAME, PASSWORD, CHARSET, DATABASE, DB_URL
-from app.models.user import User
+
 
 Base = declarative_base()
 engine = create_engine(DB_URL, encoding=CHARSET, echo=True)
@@ -16,6 +15,13 @@ SessionLocal = scoped_session(
 )
 Base.query = SessionLocal.query_property()
 
+
+
+async def init_db():
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        raise e
 
 
 async def get_db():

@@ -1,11 +1,18 @@
-from pydantic import BaseModel
+from uuid import uuid4
+
+from ..database import Base
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import Session, relationship, declarative_base
+from sqlalchemy_utils import UUIDType
 
-Base = declarative_base()
-class User(Base):
+
+from app.models.mixins import TimestampMixin
+
+
+class User(Base, TimestampMixin):
     __tablename__ = 'users'
-    user_email = Column(String(20), primary_key=True)
+    user_id = Column(UUIDType(binary=False), primary_key=True, default=uuid4)
+    user_email = Column(String(20))
     password = Column(String(20), nullable=False)
     user_name = Column(String(20), nullable=False)
     phone = Column(String(20))
@@ -15,17 +22,8 @@ class User(Base):
     user_interests = Column(String(20))
     token = Column(String(20))
 
-    class Config:
-        arbitrary_types_allowed = True
+    articles = relationship('Article', back_populates='user')
 
-class Post(Base):
-    __tablename__ = 'posts'
-    use_in_migration = True
-    post_id = Column(primary_key=True, autoincrement=True)
-    title = Column(String(100))
-    content = Column(String(100))
-    create_at = Column(DateTime)
-    updated_at = Column(DateTime)
 
     class Config:
         arbitrary_types_allowed = True
