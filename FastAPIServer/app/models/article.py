@@ -16,5 +16,6 @@ class Article(Base, TimestampMixin):
     user_id = Column(UUIDType(binary=False), ForeignKey('users.user_id'), nullable=True)
 
     user = relationship('User', back_populates='articles')
+
     class Config:
         arbitrary_types_allowed = True

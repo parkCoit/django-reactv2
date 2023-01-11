@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 
 if __name__ == '__main__':
 
-    img_rgb = cv2.imread(r'C:\Users\bitcamp\django-react\DjangoServer\team\img\KR_6277840301\0.png')
+    img_rgb = cv2.imread(r'C:\Users\bitcamp\django-react\DjangoServer\team\img\KR_6277840301\0.png', 0)
 
     # # inRange 함수 이용하여 색으로 뽑기
     # src_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2HSV)
@@ -36,15 +36,18 @@ if __name__ == '__main__':
     # plt.show()
 
     # matchTemplate함수 사용하여
-    template = cv2.imread(r'C:\Users\bitcamp\django-react\DjangoServer\team\labels\빨강와드.png')
-    h, w = template.shape[:-1]
+    template = cv2.imread(r'C:\Users\bitcamp\django-react\DjangoServer\team\labels\빨강와드.png', 0)
+    w, h = template.shape[::-1]
+    print(w, h)
 
-    res = cv2.matchTemplate(img_rgb, template, cv2.TM_CCOEFF_NORMED)
-    threshold = .48
-    loc = np.where(res >= threshold)
+    res = cv2.matchTemplate(img_rgb, template, cv2.TM_CCOEFF)
+    min_val, max_val, min_lod, max_lod = cv2.minMaxLoc(res)
 
-
-    for pt in zip(*loc[::-1]):  # Switch collumns and rows
-        print(pt)
-        cv = cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
-    cv2.imwrite('ad.png', cv)
+    top_left = min_lod
+    bottom_right = (top_left[0] + w , top_left[1] + h)
+    cv2.rectangle(img_rgb, top_left, bottom_right, 255, 2)
+    plt.subplot(121),plt.imshow(res,cmap='gray')
+    plt.title('asd'),plt.xticks([]),plt.yticks([])
+    plt.subplot(122), plt.imshow(img_rgb, cmap='gray')
+    plt.title('zvzc'), plt.xticks([]), plt.yticks([])
+    plt.show()
