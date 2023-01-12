@@ -5,7 +5,7 @@ from collections import defaultdict
 class Name(object):
     def __init__(self):
         global api_key, watcher, my_region
-        api_key = "RGAPI-0eab8cd7-2185-4cd3-80a1-d2b08c306045"
+        api_key = "RGAPI-2d9f46bc-9615-4aa2-918b-a53b55078857"
         watcher = LolWatcher(api_key)
         my_region = "kr"
 
@@ -32,6 +32,7 @@ class Name(object):
             = list(), list(), list(), list(), list(), list(), list(), list(), list(), list()
 
         for i in range(len(match_id)):
+
                 matches = watcher.match.by_id(my_region, match_id[i])
                 metadata = matches['metadata']['participants']
                 user_num = [i for i in range(0, 10) if metadata[i] == puuid]
@@ -56,15 +57,15 @@ class Name(object):
 
 
 
-            # print(f'매치 기록 : {match_id[i]}\n'
-            #       f'챔피언 이름 :{champion_name} \n'
-            #       f'승리 패배 : {win}\n'
-            #       f'킬 : {kills}\n'
-            #       f'데스 : {deaths}\n'
-            #       f'어시스트 : {assists}\n'
-            #       f'kda : {kda},\n'
-            #       f'라인 : {position}\n'
-            #       f'닉네임 : {summoner_name}\n')
+                print(f'매치 기록 : {match_id[i]}\n'
+                      f'챔피언 이름 :{champion_name} \n'
+                      f'승리 패배 : {win}\n'
+                      f'킬 : {kills}\n'
+                      f'데스 : {deaths}\n'
+                      f'어시스트 : {assists}\n'
+                      f'kda : {kda},\n'
+                      f'라인 : {position}\n'
+                      f'닉네임 : {summoner_name}\n')
         db_df = pd.DataFrame({'champion': champion_name_ls, 'win': result_ls, 'kills': kills_ls,
                     'deaths': deaths_ls, 'assists': assists_ls, 'kda' : kda_ls, 'position': position_ls, 'summoner_name': summoner_name_ls }, index=match_id_ls)
         print(db_df)

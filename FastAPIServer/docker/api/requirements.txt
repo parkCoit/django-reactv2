@@ -5,3 +5,4 @@ fastapi
 pymysql
 fastapi_sqlalchemy
 sqlalchemy_utils
+pytz
