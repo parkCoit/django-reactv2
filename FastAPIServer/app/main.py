@@ -13,6 +13,15 @@ router.include_router(user_router, prefix="/users", tags=["users"])
 router.include_router(article_router, prefix="/posts", tags=["posts"])
 
 app = FastAPI()
+origins = ["http://localhost:3000"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.router.redirect_slashes = False
 
 
 app.include_router(router)
