@@ -1,9 +1,9 @@
 import { PayloadAction } from "@reduxjs/toolkit"
 import { call, delay, put, takeLatest } from "redux-saga/effects"
 import { joinRequest, joinSuccess, loginRequest, loginSuccess,
-    userAction } from '@/modules/slices';
-import { User } from '@/modules/types';
-import { user } from '@/modules/controllers';
+    userAction, articleAction } from '@/modules/slices';
+import { User, Article } from '@/modules/types';
+import { user, article } from '@/modules/controllers';
 // import { user } from '@/modules/apis/userAPI';
 // api 
 
@@ -13,21 +13,23 @@ export function* watchJoin(){
         try{
             const response: any = user.join(action.payload)
             put(joinSuccess(response.payload))
-            window.location.href = '/'
+            window.location.href = '/user/login'
         }catch(error){
             put(userAction.joinFailure(error))
         }
     })
 }
+
 export function* watchLogin(){
     yield takeLatest(loginRequest, (action: {payload: User}) => {
         
         try{
             const response: any = user.login(action.payload)
-            // put(loginSuccess(response.data))
+            put(loginSuccess({data: response.data}))
             window.location.href = '/loginHome'
         }catch(error){
             put(userAction.joinFailure(error))
         }
     })
 }
+

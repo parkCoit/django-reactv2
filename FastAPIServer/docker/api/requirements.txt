@@ -6,3 +6,6 @@ pymysql
 fastapi_sqlalchemy
 sqlalchemy_utils
 pytz
+pyjwt
+shortuuid
+passlib

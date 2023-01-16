@@ -17,9 +17,9 @@ export default function Join() {
         <h2>회원가입</h2>
         <form onSubmit={handleSubmit(onSubmit)} method="post">
 
-          <label htmlFor="user_email">이메일(ID):</label>
+          <label htmlFor="email">이메일(ID):</label>
           <input 
-            {...register("user_email", { 
+            {...register("email", { 
               required: true,
               maxLength: 30,
               pattern: {
@@ -27,11 +27,11 @@ export default function Join() {
                   message: "이메일 형식에 맞게 입력해주세요"
               }
           })}
-            type="text"  id="user_email" name="user_email" 
+            type="text"  id="email" name="email" 
             placeholder="name@example.com"
             required minLength= {10} maxLength={20}/> <br/>
             
-            {errors.user_email && <p>{errors.user_email.message}</p>}
+            {errors.email && <p>{errors.email.message}</p>}
           <label htmlFor="password">비밀번호:</label>
           <input 
             {...register("password", { 
@@ -62,7 +62,7 @@ export default function Join() {
                     {errors.cpassword && <p>비밀번호가 일치하지 않습니다</p>}
           <label htmlFor="user_name">이름(실명):</label>
           <input
-          {...register("user_name", { 
+          {...register("username", { 
             required: true, 
             maxLength: {
                 value: 20,
@@ -70,10 +70,10 @@ export default function Join() {
             }
         })}
           
-          type="text" id="user_name" name="user_name" 
+          type="text" id="username" name="username" 
           placeholder="사용자 이름"
           required /> 
-        {errors.user_name && <p>{errors.user_name.message}</p>}<br/>
+        {errors.username && <p>{errors.username.message}</p>}<br/>
           <label htmlFor="phone">전화번호:</label>
           <input type="text" id="phone" name="phone" required /> <br/>
 

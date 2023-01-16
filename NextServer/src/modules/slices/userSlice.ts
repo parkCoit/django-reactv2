@@ -31,8 +31,10 @@ const userSlice = createSlice({
             state.status = 'failed'
             state.data = [...state.data, payload]
         },
-        loginRequest(state: UserState, _payload){
+        loginRequest(state: UserState, action: PayloadAction<User>){
+            alert(`2 joinRequest ${JSON.stringify(action.payload)}`)
             state.status = 'loading'
+            state.error = null
         },
         loginSuccess(state: UserState, {payload}){
             state.status = 'idle'

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { fromPairs } from "lodash";
 
 // const SERVER = process.env.NEXT_PUBLIC_SERVER_URL
 // 인증 필요없는 axios 
@@ -36,3 +37,4 @@ export const imageUpload = axios.create({
 })
 
 export * from '../apis/userAPI';
+export * from '../apis/articleAPI';
