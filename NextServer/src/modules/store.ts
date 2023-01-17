@@ -31,7 +31,7 @@ const rootReducer = (
 const makeStore = () =>{
     const store = 
     configureStore({
-        reducer:{ rootReducer },
+        reducer:{ user: userReducer, article : articleReducer },
         middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({serializableCheck: false})
             .prepend(sagaMiddleware)

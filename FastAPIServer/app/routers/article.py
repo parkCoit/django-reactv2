@@ -12,7 +12,7 @@ article_router = APIRouter()
 @article_router.post("")
 async  def write(articledto: ArticleDTO, db: Session = Depends(get_db)):
     articleclud = ArticleCrud(db)
-    result = articleclud.add_articles(request_article=articledto)
+    result = articleclud.write(request_article=articledto)
     return result
 
 @article_router.post("/{id}")

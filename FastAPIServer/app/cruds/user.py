@@ -34,12 +34,16 @@ class UserCrud(UserBase, ABC):
         else:
             return None
 
-
     def update_user(self, request_user: UserDTO) -> str:
-        pass
+        update_user = User(**request_user.dict())
+        return update_user
 
     def delete_user(self, request_user: UserDTO) -> str:
-        pass
+        user = User(**request_user.dict())
+        delete = self.db.query(User).filter(User.email == user.email).first()
+        self.db.delete(delete)
+        self.db.commit()
+        return "success"
 
     def find_all_users(self, page: int) -> List[User]:
         print(f" page number is {page}")

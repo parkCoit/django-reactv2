@@ -1,10 +1,11 @@
-
+from starlette.responses import HTMLResponse
 
 from app.admin.utils import current_time
 from app.database import init_db
 from app.env import DB_URL
 from app.routers.user import user_router
 from app.routers.article import article_router
+from app.test.user import test_router
 
 from fastapi import FastAPI, APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import DBSessionMiddleware
@@ -17,6 +18,7 @@ print(f" ############ app.main Started At {current_time()} ############")
 router = APIRouter()
 router.include_router(user_router, prefix="/users", tags=["users"])
 router.include_router(article_router, prefix="/article", tags=["posts"])
+router.include_router(test_router, prefix="/test", tags=["test"])
 
 app = FastAPI()
 origins = ["http://localhost:3000"]
@@ -45,8 +47,15 @@ async def on_startup():
     await init_db()
 
 @app.get("/")
-async def root():
-    return {"message": 'Welcome'}
+async def home():
+    return HTMLResponse(content=f"""
+    <body>
+    <div style="width: 400px; margin: 50px auto;">
+        <h1>현재 서버 구동 중 입니다.</h1>
+        <h2>{current_time()}</h2>
+    </div>
+    </body>
+    """)
 
 
 @app.get("/hello/{name}")

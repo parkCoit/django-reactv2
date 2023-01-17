@@ -1,14 +1,20 @@
 import { NextPage } from "next"
 import { useEffect, useState } from "react";
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { User } from "@/modules/types"
+import { AppState } from "@/modules/store"
+import {userSelector} from "@/modules/slices";
+import {useAppSelector} from "@/modules/store";
+
 interface Props{ article: string }
 
 const LoginHomePage: NextPage<Props> = () => {
+
   const [user, setUser] = useState({
     userid : '',
     email : '',
     password : '',
-    cpassword: '', 
     username : '',
     phone : '',
     birth : '',
@@ -18,10 +24,27 @@ const LoginHomePage: NextPage<Props> = () => {
     token : '',
     created : '',
     modified : ''
-  })
-
+  }) 
+    /**const [token, setToken] = useState('')*/
+  //const userData: string = useSelector(userSelector)
+  //const result: string = useAppSelector((state: AppState) => state.user.token || 'tess')
   useEffect(()=>{
-    setUser(JSON.parse(localStorage.getItem("sessioin")||'{}'))
+    alert(`6 session is ${localStorage.getItem("session")}`)
+    const session:{
+      userid : '',
+      email : '',
+      password : '',
+      username : '',
+      phone : '',
+      birth : '',
+      address : '',
+      job : '',
+      interests : '',
+      token : '',
+      created : '',
+      modified : ''
+    } = JSON.parse(localStorage.getItem("session")||'{}')
+    setUser(session)
   },[])
 
 
@@ -30,7 +53,7 @@ const LoginHomePage: NextPage<Props> = () => {
       <Sheet >
         <thead>
           <Row>
-            <Cell colSpan={2}><h6>회원정보</h6></Cell>
+            <Cell colSpan={2}><h6>회원정보 </h6></Cell>
           </Row>
         </thead>
         <tbody>
@@ -43,23 +66,25 @@ const LoginHomePage: NextPage<Props> = () => {
           </Row>
         <Row><Cell>
       <label htmlFor="password">비밀번호</label></Cell>
-      <Cell>{user.password}
-            </Cell>
+          <Cell>
+            {user.password}
+          </Cell>
           </Row>
          
           <Row>
             <Cell>
               <label htmlFor="username">이름(실명)</label>
             </Cell>
+              {user.username}
             <Cell>
-            {user.username}
+           
             </Cell>
           </Row>
           <Row>
             <Cell>
             <label htmlFor="phone">전화번호</label></Cell>
             <Cell>
-            {user.phone}
+              {user.phone}
             </Cell>
           </Row>
           <Row>
@@ -71,18 +96,22 @@ const LoginHomePage: NextPage<Props> = () => {
           </Row>
           <Row>
             <Cell><label htmlFor="address">주소</label></Cell>
-            <Cell>{user.address}</Cell>
+            <Cell>
+              {user.address}
+            </Cell>
           </Row>
           <Row>
             <Cell>
             <label htmlFor="job">직업</label></Cell>
-            <Cell>{user.job}
+            <Cell>
+              {user.job}
             </Cell>
           </Row>
           <Row>
             <Cell>
             <label htmlFor="interests">관심사항</label></Cell>
-            <Cell>{user.interests}
+            <Cell>
+              {user.interests}
             </Cell>
           </Row>
           

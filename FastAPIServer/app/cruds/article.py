@@ -15,34 +15,22 @@ class ArticleCrud(ArticleBase, ABC):
     def __init__(self, db: Session):
         self.db: Session = db
 
-    def add_articles(self, request_article: ArticleDTO) -> str:
+    def write(self, request_article: ArticleDTO) -> str:
         article = Article(**request_article.dict())
         self.db.add(article)
         self.db.commit()
         return "success"
 
-    def find_articles(self, request_article: ArticleDTO) -> str:
+    def update_article(self, request_article: ArticleDTO) -> str:
         pass
 
-    def write(self, request_article: ArticleDTO) -> Article:
-        article = Article(**request_article.dict())
-        self.db.add(article)
-        self.db.commit()
-        return "success"
-
-    def login(self, request_article: ArticleDTO) -> str:
+    def delete_article(self, page: int) -> List[Article]:
         pass
 
-    def update(self, request_article: ArticleDTO) -> str:
+    def find_all_articles(self, request_article: ArticleDTO) -> ArticleDTO:
         pass
 
-    def delete(self, page: int) -> List[Article]:
-        pass
-
-    def find_article(self, request_article: ArticleDTO) -> ArticleDTO:
-        pass
-
-    def find_articles_by_job(self, request_article: ArticleDTO) -> str:
+    def find_articles_by_userid(self, request_article: ArticleDTO) -> str:
         pass
 
     def find_article_by_title(self, request_article: ArticleDTO) -> str:

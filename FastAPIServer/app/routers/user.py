@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
@@ -48,17 +49,25 @@ async def login(dto: UserDTO, db: Session = Depends(get_db)):
             result = JSONResponse(status_code=400, content=dict(msg="이메일 주소가 존재하지 않습니다"))
     return result
 
-@user_router.put("/modify/{id}")
-async def update(id:str, item: UserDTO, db: Session = Depends(get_db)):
+@user_router.put("/modify/{user_id}")
+async def update(id:str, dto: UserDTO, db: Session = Depends(get_db)):
     user_crud = UserCrud(db)
-    user_crud.update(id,item,db)
-    return {"data": "success"}
+    update_item = jsonable_encoder(user_crud.update_user(request_user=dto))
+    return user_crud.update_user(request_user=dto)[id]
 
-@user_router.delete("/delete/{id}", tags=['age'])
-async def delete(id:str, item: UserDTO, db: Session = Depends(get_db)):
+@user_router.delete("/delete/{email}", tags=['age'])
+async def delete(email:str, dto: UserDTO, db: Session = Depends(get_db)):
     user_crud = UserCrud(db)
-    user_crud.delete(id,item,db)
-    return {"data": "success"}
+    userid = user_crud.find_userid_by_email(request_user=dto)
+    print(f"이메일 0000{dto.email}")
+    print(f"이메일 0000{email}")
+    if dto.email == email:
+        result = user_crud.delete_user(request_user=dto)
+    else:
+        result = JSONResponse(status_code=400, content=dict(msg="이메일이 없습니다."))
+    # result = dao.join(dto, db)
+
+    return {"data": result}
 
 @user_router.get("/page/{page}")
 async def get_users(page: int, db: Session = Depends(get_db)):

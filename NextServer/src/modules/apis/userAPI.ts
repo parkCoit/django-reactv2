@@ -26,10 +26,12 @@ export const user = {
     async login(payload: User){
         try{
             const response : AxiosResponse<any, User[]> =
-            await author.post('/users/login', payload)
-            alert(` 서버에서 리턴받은 값: ${JSON.stringify(response.data.email)}`)
-            localStorage.setItem("email", response.data.email)
-            //return response.data
+            await author.post('http://localhost:8000/users/login', payload)
+            alert(` 3 서버에서 리턴받은 값: ${JSON.stringify(response.data.data)}`)
+            localStorage.clear()
+            localStorage.setItem("session", JSON.stringify(response.data.data))
+
+            return response.data.data
         }catch(err){
             return err;
         }
