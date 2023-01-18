@@ -35,7 +35,7 @@ export function* watchJoin(){
 
 export interface UserLoginInput{ email: string, password: string }
 function* login(action: {payload: UserLoginInput}){
-    const {loginSuccess, loginFailure} = userAction
+    const {loginSuccess, loginFailure } = userAction
     const param = action.payload
     try{
         alert(`2 사가 내부 : ${JSON.stringify(param)}` )

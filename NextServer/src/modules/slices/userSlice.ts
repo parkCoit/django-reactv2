@@ -44,21 +44,22 @@ const userSlice = createSlice({
         },
         loginSuccess(state: UserState, {payload}){
             //alert(`&&&&&&&& loginSuccess >>>> payload is ${JSON.stringify(payload)}`)
-            alert(`4 token >>>> payload is ${payload.token}`)
+            alert(`4 token >>>> payload is ${payload}`)
             state.status = 'idle'
             state.data = [...state.data, payload.data]
-            state.token = payload.token
+            state.token = payload
             alert(`5 token >>>> state.token is ${state.token}`)
         },
         loginFailure(state: UserState, {payload}){
             state.status = 'failed'
             state.data = [...state.data, payload]
         },
-        logoutRequest(state: UserState) {
+        logoutRequest(state: UserState, {payload}) {
+            alert(`5 token >>>>> state.token is ${payload.token}`)
             state.status = 'loading';
             state.error = null;
         },
-        logoutSuccess(state: UserState ){
+        logoutSuccess(state: UserState){
             state.status = 'idle'
             window.location.href = '/'
         },

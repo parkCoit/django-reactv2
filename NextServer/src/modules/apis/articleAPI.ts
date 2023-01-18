@@ -8,7 +8,7 @@ export const article = {
     async Write(payload: Article){
         try{
             const response : AxiosResponse<any, Article[]> =
-            await axios.post(`http://localhost:8000/article`, payload, {headers: {
+            await axios.post(`http://localhost:8000/article/register`, payload, {headers: {
                 "Content-Type" : "application/json",
                 Authorization: "JWT fefege...",
             }})

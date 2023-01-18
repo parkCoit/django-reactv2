@@ -18,7 +18,7 @@ class User(Base, TimestampMixin): # Base
     address = Column(String(100))
     job = Column(String(20))
     interests = Column(String(100))
-    token = Column(String(100))
+    token = Column(String(256))
 
     articles = relationship('Article', back_populates='user')
 

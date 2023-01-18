@@ -12,7 +12,8 @@ export const user = {
                     "Content-Type" : "application/json",
                     Authorization: "JWT fefege...",
                 }})
-                if(response.data === "success"){
+                alert(JSON.stringify(response.data.msg))
+                if(response.data.msg === "success"){
                     alert(' 결과: API 내부 join 성공  ')
                 }else{
                     alert(' 결과: API 내부 join 실패  '+ JSON.stringify(response.data.msg))
@@ -27,11 +28,13 @@ export const user = {
         try{
             const response : AxiosResponse<any, User[]> =
             await author.post('http://localhost:8000/users/login', payload)
-            alert(` 3 서버에서 리턴받은 값: ${JSON.stringify(response.data.data)}`)
+            alert(` 3 서버에서 리턴받은 값: ${JSON.stringify(response.data)}`)
             localStorage.clear()
-            localStorage.setItem("session", JSON.stringify(response.data.data))
+            const data = response.data
+            localStorage.setItem("session", data.msg)
+            alert(`스토리지에 저장된 토큰 ${localStorage.getItem("session")}`)
 
-            return response.data.data
+            return response.data.msg
         }catch(err){
             return err;
         }
