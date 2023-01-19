@@ -1,4 +1,5 @@
 
+
 export default function UserList(){
     
     return <>
@@ -10,7 +11,7 @@ export default function UserList(){
                 </tr>
             </thead>
             <tbody>
-            
+                
             </tbody>
         </table>
     </>

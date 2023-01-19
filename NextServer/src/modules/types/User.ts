@@ -9,14 +9,14 @@ export interface User{
     address? : string,
     job? : string,
     interests? : string,
-    token? : string
+    token? : string,
     created? : string,
-    modified? : string
+    modified? : string,
 }
 
 export interface UserLoginInput{
-    email? : string,
-    password? : string
+    email : string,
+    password : string,
 }
 
 export interface UserUpdate{

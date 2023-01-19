@@ -49,6 +49,14 @@ class UserCrud(UserBase, ABC):
         else:
             return "FAILURE: 이메일 주소가 존재하지 않습니다"
 
+    def logout_user(self, request_user: UserDTO) -> str:
+        user = self.find_user_by_token(request_user)
+        is_success = self.db.query(User).filter(User.userid == user.userid). \
+            update({User.token : ""}, synchronize_session=False)
+        self.db.commit()
+        print(f"토큰 삭제되면 1이 리턴 에상함 : {is_success}")
+        return 'LogOut'
+
     def update_user(self, request_user: UserUpdate) -> str:
         db_user = self.find_user_by_id_for_update(request_user)
         for var, value in vars(request_user).items():
@@ -67,11 +75,11 @@ class UserCrud(UserBase, ABC):
 
     def reset_password(self, request_user: UserDTO):
         user = User(**request_user.dict())
-        get_hashed_password(user.password)
+        user.password = get_hashed_password(user.password)
         is_success = self.db.query(User).filter(User.userid == user.userid) \
             .update({User.password: user.password}, synchronize_session=False)
         self.db.commit()
-        self.db.refresh(user)
+        self.db.refresh(User)
         return "" if is_success != 0 else ""
 
     def delete_user(self, request_user: UserDTO) -> str:
@@ -81,9 +89,8 @@ class UserCrud(UserBase, ABC):
         self.db.commit()
         return  "탈퇴 성공입니다." if is_success != 0 else "탈퇴 실패입니다."
 
-    def find_all_users_per_page(self, page: int) -> List[User]:
-        print(f" page number is {page}")
-        return self.db.query(User).all()
+    def find_all_users_order_by_created(self) -> List[User]:
+        return self.db.query(User).order_by(User.created).all()
 
     def find_user_by_token(self, request_user: UserDTO) -> User:
         user = User(**request_user.dict())
@@ -112,4 +119,9 @@ class UserCrud(UserBase, ABC):
 
     def find_all_users(self, db: Session, skip: int = 0, limit: int = 100):
         return db.query(User).offset(skip).limit(limit).all()
+
+    def count_all_users(self) -> int:
+        return self.db.query(User).count()
+
+
 

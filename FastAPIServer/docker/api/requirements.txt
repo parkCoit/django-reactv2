@@ -9,3 +9,4 @@ pytz
 pyjwt
 shortuuid
 passlib
+pip install fastapi-pagination

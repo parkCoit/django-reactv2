@@ -1,8 +1,11 @@
 import { onProps } from "@/modules/types";
+import { useRef } from "react";
 import styled from 'styled-components';
 
 export default function Login({onChange, onSubmit}: onProps){
 
+    const emailFef = useRef<HTMLInputElement>(null)
+    const passwordFef = useRef<HTMLInputElement>(null)
     return (
         <>
             <form onSubmit={onSubmit}>

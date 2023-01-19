@@ -1,6 +1,6 @@
 import { all, fork } from "redux-saga/effects"
 import{
-    watchJoin, watchLogin
+    watchJoin, watchLogin, watchLogout
 } from "./userSaga"
 
 import {
@@ -8,5 +8,5 @@ import {
 } from "./articleSaga"
 
 export default function* rootSaga(){
-    yield all([ fork(watchJoin), fork(watchLogin), fork(userWrite) ])
+    yield all([ fork(watchJoin), fork(watchLogin), fork(watchLogout), fork(userWrite) ])
 }

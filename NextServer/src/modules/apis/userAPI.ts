@@ -34,14 +34,15 @@ export const user = {
             localStorage.setItem("session", data.msg)
             alert(`스토리지에 저장된 토큰 ${localStorage.getItem("session")}`)
 
-            return response.data.msg
+            return data.msg
         }catch(err){
             return err;
         }
     },
-    async logout(){
+    async logout(payload: User){
         try{
-            await client.post('/users/logout')
+            const response : AxiosResponse = await client.post('/users/logout', payload)
+            return response.data.msg
         } catch(err){
             console.log(err)
             return err;

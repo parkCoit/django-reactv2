@@ -38,7 +38,7 @@ const userSlice = createSlice({
             state.status = 'failed'
             state.data = [...state.data, payload]
         },
-        loginRequest(state: UserState,action: PayloadAction<UserLoginInput>){
+        loginRequest(state: UserState, action: PayloadAction<UserLoginInput>){
             alert(` 1 ${JSON.stringify(action.payload)}`)
             state.status = 'loading'
         },
@@ -58,6 +58,7 @@ const userSlice = createSlice({
             alert(`5 token >>>>> state.token is ${payload.token}`)
             state.status = 'loading';
             state.error = null;
+            state.token = ''
         },
         logoutSuccess(state: UserState){
             state.status = 'idle'

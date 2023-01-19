@@ -47,8 +47,27 @@ function* login(action: {payload: UserLoginInput}){
     }
 }
 
+function* logout(action: {payload: UserLoginInput}){
+    const {logoutSuccess, logoutFailure } = userAction
+    const param = action.payload
+    try{
+        alert(`삭제하고자 하는 토큰 ${JSON.stringify(param)}`)
+        const response: User = yield call(user.logout, param)
+        alert(`로그아웃 결과 ${response}`)
+        yield put(logoutSuccess())
+        window.location.href = ('/')
+    }catch(error: any){
+        put(userAction.logoutFailure(error))
+    }
+}
+
 export function* watchLogin(){
     const {loginRequest} = userAction
     yield takeLeading(loginRequest, login)
+}
+
+export function* watchLogout(){
+    const {logoutRequest} = userAction
+    yield takeLeading(logoutRequest, logout)
 }
 

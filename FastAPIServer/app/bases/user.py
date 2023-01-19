@@ -13,6 +13,9 @@ class UserBase(metaclass=ABCMeta):
     def login_user(self, request_user: UserDTO) -> User: pass
 
     @abstractmethod
+    def logout_user(self, request_user: UserDTO) -> str: pass
+
+    @abstractmethod
     def update_user(self, request_user: UserUpdate): pass
 
     @abstractmethod
@@ -22,7 +25,7 @@ class UserBase(metaclass=ABCMeta):
     def delete_user(self, request_user: UserDTO): pass
 
     @abstractmethod
-    def find_all_users_per_page(self, request_user: UserDTO) -> List[User]: pass
+    def find_all_users_order_by_created(self) -> List[User]: pass
 
     @abstractmethod
     def find_all_users(self, request_user: UserDTO) -> List[User]: pass
@@ -35,3 +38,6 @@ class UserBase(metaclass=ABCMeta):
 
     @abstractmethod
     def match_token(self, request_user: UserDTO) -> bool: pass
+
+    @abstractmethod
+    def count_all_users(self) -> int: pass

@@ -4,6 +4,7 @@ import React from "react";
 import { useDispatch } from "react-redux"
 import { logoutRequest } from "@/modules/slices"
 import {useAppDispatch, useAppSelector} from '@/hooks'
+import {Logout} from '../user'
 
 export default function NavbarAuth(){
     const dispatch = useAppDispatch()
@@ -14,6 +15,7 @@ export default function NavbarAuth(){
         const token = localStorage.getItem("session")
         alert(`Navbar 에 저장된 토큰 ${token}`)
         dispatch(logoutRequest({"token" : token}))
+        localStorage.removeItem("session")
     }
     
   return (
@@ -26,7 +28,7 @@ export default function NavbarAuth(){
         <li className="nav-item"><Link href="/article/write">글쓰기</Link></li><span style={{width:10}}/>
         
       </ul>
-      <input type="button" id="logout" value="로그아웃" onClick={logout}/>
+      <Logout props={logout}/>
       </nav>
     </div>
   );

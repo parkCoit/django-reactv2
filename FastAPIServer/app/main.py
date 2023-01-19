@@ -1,3 +1,5 @@
+import uvicorn
+from fastapi_pagination import add_pagination
 from starlette.responses import HTMLResponse
 
 from app.admin.utils import current_time
@@ -21,6 +23,7 @@ router.include_router(article_router, prefix="/article", tags=["posts"])
 router.include_router(test_router, prefix="/test", tags=["test"])
 
 app = FastAPI()
+add_pagination(app) # 페이지 설정
 origins = ["http://localhost:3000"]
 app.add_middleware(
     CORSMiddleware,
@@ -66,6 +69,10 @@ async def say_hello(name: str):
 @app.get("/no-match-token")
 async def no_match_token():
     return {"message" : f"토큰 유효시간이 지남"}
+
+
+if __name__ == '__main__':   ### 서버 자동 시간 구동
+    uvicorn.run("main:app",host='0.0.0.0', port=8000, reload=True)
 
 
 
