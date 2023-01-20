@@ -3,7 +3,7 @@ from typing import List
 
 from sqlalchemy import select
 
-from app.admin.security import verify_password, generate_token, get_hashed_password
+from app.admin.security import verify_password, generate_token, get_hashed_password, myuuid
 from app.bases.user import UserBase
 from app.database import conn
 from app.models.user import User
@@ -22,6 +22,7 @@ class UserCrud(UserBase, ABC):
         user = User(**request_user.dict())
         userid = self.find_userid_by_email(request_user=request_user)
         if userid == "":
+            user.userid = myuuid()
             user.password = get_hashed_password(user.password)
             is_success = self.db.add(user)
             self.db.commit()
@@ -31,6 +32,7 @@ class UserCrud(UserBase, ABC):
         else:
             message = "FAILURE: 이메일이 이미 존재합니다"
         return message
+
 
     def login_user(self, request_user: UserDTO) -> str:
         userid = self.find_userid_by_email(request_user=request_user)

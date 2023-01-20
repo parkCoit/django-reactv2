@@ -9,4 +9,5 @@ pytz
 pyjwt
 shortuuid
 passlib
-pip install fastapi-pagination
+fastapi-pagination
+Faker

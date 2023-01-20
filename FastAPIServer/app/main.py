@@ -8,6 +8,7 @@ from app.env import DB_URL
 from app.routers.user import user_router
 from app.routers.article import article_router
 from app.test.user import test_router
+from app.admin.pagenation import pagination_router
 
 from fastapi import FastAPI, APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import DBSessionMiddleware
@@ -21,6 +22,7 @@ router = APIRouter()
 router.include_router(user_router, prefix="/users", tags=["users"])
 router.include_router(article_router, prefix="/article", tags=["posts"])
 router.include_router(test_router, prefix="/test", tags=["test"])
+router.include_router(pagination_router, prefix="/pagination", tags=["pagination"])
 
 app = FastAPI()
 add_pagination(app) # 페이지 설정
@@ -71,8 +73,7 @@ async def no_match_token():
     return {"message" : f"토큰 유효시간이 지남"}
 
 
-if __name__ == '__main__':   ### 서버 자동 시간 구동
-    uvicorn.run("main:app",host='0.0.0.0', port=8000, reload=True)
+
 
 
 

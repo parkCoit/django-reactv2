@@ -22,6 +22,13 @@ class UserDTO(UserVo):
     created: Optional[str]
     modified: Optional[str]
 
+    def __str__(self):
+        return f'이름: {self.username}, \n ' \
+               f'이메일: {self.email} \n ' \
+               f'비번: {self.password} \n' \
+               f'생년월일: {self.birth} \n' \
+               f'주소: {self.address} \n'
+
 
 class UserList(UserVo):
     userid : Optional[str]

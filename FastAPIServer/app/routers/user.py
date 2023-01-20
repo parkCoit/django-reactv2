@@ -6,7 +6,7 @@ from starlette.responses import JSONResponse, RedirectResponse
 
 from app.cruds.user import UserCrud
 from app.admin.security import get_hashed_password, generate_token
-from app.admin.utils import current_time
+from app.admin.utils import current_time, paging
 from app.database import get_db
 from app.schemas.user import UserDTO, UserUpdate, UserList
 
@@ -74,13 +74,17 @@ async def remove_user(dto: UserDTO, db: Session = Depends(get_db)):
         RedirectResponse(url='/no-match-token', status_code=302)
 
 
-@user_router.get("/page/{page}", response_model=Page[UserList])
+@user_router.get("/page/{page}",response_model=Page[UserList])
 async def get_users_per_page(page: int, db: Session = Depends(get_db)):
     results = UserCrud(db).find_all_users_order_by_created()
     default_size = 5
     page_result = paginate(results, Params(page=page, size=default_size))
+    print(f" ----> page_result type is {type(page_result)}")
+    print(f" ----> page_result is {page_result}")
     count = UserCrud(db).count_all_users()
-    dc = {"count": count, "pager": page_result}
+    pager = paging(request_page=page, row_cnt=count)
+    dc = {"pager":pager,
+          "users":page_result } # items가 키값이므로 users.items
     return JSONResponse(status_code=200,
                         content=jsonable_encoder(dc))
 
