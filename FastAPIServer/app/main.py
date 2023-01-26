@@ -4,11 +4,12 @@ from starlette.responses import HTMLResponse
 
 from app.admin.utils import current_time
 from app.database import init_db
-from app.env import DB_URL
+from app.env_localhost import DB_URL
 from app.routers.user import user_router
 from app.routers.article import article_router
 from app.test.user import test_router
 from app.admin.pagenation import pagination_router
+from mangum import Mangum
 
 from fastapi import FastAPI, APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import DBSessionMiddleware
