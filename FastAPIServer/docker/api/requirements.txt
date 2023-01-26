@@ -1,0 +1,14 @@
+mysqlclient
+sqlalchemy
+uvicorn
+fastapi
+pymysql
+fastapi_sqlalchemy
+sqlalchemy_utils
+pytz
+pyjwt
+shortuuid
+passlib
+fastapi-pagination
+Faker
+mangum
