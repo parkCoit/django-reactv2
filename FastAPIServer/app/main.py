@@ -4,12 +4,12 @@ from starlette.responses import HTMLResponse
 
 from app.admin.utils import current_time
 from app.database import init_db
-from app.env_localhost import DB_URL
+from .env import DB_URL
+from app.routers.chatbot import chatbot_router
 from app.routers.user import user_router
 from app.routers.article import article_router
 from app.test.user import test_router
 from app.admin.pagenation import pagination_router
-from mangum import Mangum
 
 from fastapi import FastAPI, APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import DBSessionMiddleware
@@ -24,6 +24,7 @@ router.include_router(user_router, prefix="/users", tags=["users"])
 router.include_router(article_router, prefix="/article", tags=["posts"])
 router.include_router(test_router, prefix="/test", tags=["test"])
 router.include_router(pagination_router, prefix="/pagination", tags=["pagination"])
+router.include_router(chatbot_router, prefix="/chatbot", tags=["chatbot"])
 
 app = FastAPI()
 add_pagination(app) # 페이지 설정
@@ -73,8 +74,8 @@ async def say_hello(name: str):
 async def no_match_token():
     return {"message" : f"토큰 유효시간이 지남"}
 
-
-handler = Mangum(app)
+# from mangum import Mangum
+# handler = Mangum(app)
 
 
 

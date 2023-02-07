@@ -2,8 +2,8 @@ FROM python:3.9
 
 WORKDIR /app
 ADD requirements.txt .
-RUN pip install --trusted-host pypi.pytdockhon.org -r requirements.txt
+RUN python -m pip install --upgrade pip
+RUN pip install -U pip wheel cmake
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
 EXPOSE 8000
-CMD ["uvicorn", "app.main:app","-D", "--reload=True", "--host", "0.0.0.0", "--port", "8000"]
-
-
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

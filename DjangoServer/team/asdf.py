@@ -2,6 +2,8 @@ import pandas as pd
 from riotwatcher import LolWatcher
 from collections import defaultdict
 
+
+
 class Name(object):
     def __init__(self):
         global api_key, watcher, my_region

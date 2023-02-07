@@ -1,0 +1,6 @@
+redteam
+redward
+redpinkward
+blueteam
+blueward
+bluepinkward

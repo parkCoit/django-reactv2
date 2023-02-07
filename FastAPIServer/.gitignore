@@ -19,6 +19,8 @@ docs_build
 venv
 docs.zip
 archive.zip
+# 추가
+app/env_aws.py
 
 # vim temporary files
 *~

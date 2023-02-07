@@ -16,7 +16,6 @@ SessionLocal = scoped_session(
 Base.query = SessionLocal.query_property()
 
 
-
 async def init_db():
     try:
         Base.metadata.create_all(bind=engine)
