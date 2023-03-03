@@ -61,3 +61,6 @@ wincertstore==0.2
 wordcloud
 yfinance==0.2.3
 PyAutoGUI
+
+
+colorthief

@@ -49,6 +49,7 @@ async def protected_route(token: str = Depends(api_key_header) ):
         raise HTTPException(status_code=403)
     return {"잘못된" : "경로입니다"}
 
+
 @app.on_event("startup")
 async def on_startup():
     await init_db()

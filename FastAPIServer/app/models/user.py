@@ -5,6 +5,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy_utils import UUIDType
 
+
 class User(Base, TimestampMixin): # Base
 
     __tablename__="users"

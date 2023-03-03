@@ -18,7 +18,6 @@ class Article(Base, TimestampMixin):
 
     user = relationship('User', back_populates='articles')
 
-
     class Config:
         BaseConfig.arbitrary_types_allowed = True
         allow_population_by_field_name = True

@@ -61,7 +61,7 @@ class Name(object):
 
                 print(f'매치 기록 : {match_id[i]}\n'
                       f'챔피언 이름 :{champion_name} \n'
-                      f'승리 패배 : {win}\n'
+                      f'승리 패배 : {result}\n'
                       f'킬 : {kills}\n'
                       f'데스 : {deaths}\n'
                       f'어시스트 : {assists}\n'
@@ -73,6 +73,8 @@ class Name(object):
         print(db_df)
         json = db_df.to_json(orient='records', force_ascii=False)
         print(json)
+
+        return json
 
     def match_list(self):
         pass
@@ -105,7 +107,7 @@ class Name(object):
 
 
 if __name__ == '__main__':
-    name = Name().summoner('응애민호')
+    name = Name().summoner('wantmyself')
     puuid = name['puuid']
     match_id = Name().match_id(name['puuid'])
     Name().play_list(puuid)
